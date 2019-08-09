@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MyBatiesApp {
 	/**
 	 * 启动类
-	 * @param args
+	 * @param args888
 	 */
     public static void main(String[] args) {
     	
