@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body ng-app="myApp">
+      <div ng-controller="firstController">
+           <!--数据格式化数字和 日期-->
+          <!--  123,456,789-->
+          <p>{{123456789 | number}}</p>
+          <!-- 12,345.679-->
+          <p>{{12345.6789 | number:3}}</p>
+          <!--$99,999,999.00-->
+          <p>{{99999999 | currency}}</p>
+          <!--rmb99,999,999.00-->
+          <p>{{99999999 | currency:'rmb'}}</p>
+          <p>
+              <!--"2019-06-27T10:23:08.438Z" -->
+              {{today}}
+          </p>
+          <p>
+              <!--2019 -->
+              {{ today | date:'yyyy' }}
+          </p>
+          <p>
+              <!--Jun 27, 2019 6:23:08 PM -->
+              {{ today | date:'medium'}}
+          </p>
+          <p>
+              <!--6/27/19 6:23 PM  -->
+              {{ today | date:'short'}}
+          </p>
+
+          <p>
+              <!--6/27/19 6:23 PM  -->
+              {{ today | date:'fullDate'}}
+          </p>
+          <!--[]-->
+          <p>
+              {{data.city |filter:'name'}}
+          </p>
+
+          <p>
+              转换成小写:{{data.message |lowercase}}
+              转换成大写:{{data.message |uppercase}}
+          </p>
+
+          <!--[{"name":"上海","py":"shanghai"},{"name":"北京","py":"beijing"},{"name":"贵阳","py":"guiyang"}]-->
+          <p>
+              {{data.city | filter:'g' }}
+          </p>
+
+          <!--[{"name":"北京","py":"beijing"},{"name":"贵阳","py":"guiyang"},{"name":"上海","py":"shanghai"}] 正序-->
+          <p>
+              正序 {{data.city | orderBy:'py' }}
+          </p>
+         <!-- [{"name":"上海","py":"shanghai"},{"name":"贵阳","py":"guiyang"},{"name":"北京","py":"beijing"}]-->
+          <p>
+              逆序 {{data.city | orderBy:'-py' }}
+          </p>
+
+          <p>
+              自定义函数：{{data.city | filter:checkName}}
+          </p>
+
+
+
+
+      </div>
+      <!-- 引入百度 angularjs -->
+      <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+      <script type="text/javascript" src="./app/index.js"></script>
+      <!--  <script  type="text/javascript" src="../vendor/angular.js"></script>-->
+</body>
+</html>

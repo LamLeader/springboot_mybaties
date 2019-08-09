@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../vendor/bootstrap3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- 分页组件开始 -->
+    <script type="text/script" src="./../vendor/pages/pagination.js"></script>
+    <link rel="stylesheet" href="./../vendor/pages/pagination.css">
+    <!-- 分页组件结束  -->
+    <style type="text/css">
+        .myApp{
+            width:78%;
+            height:100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">WELCOME TO OUR WEBSITE  author: 小武 xxxxxx.wwww.com.net</h3>
+    </div>
+    <div class="panel-body">
+        <center><h2 style="margin-left: 60px;color:#7feeff;border:1px;border-radius: 12px solid #7feeff;">后端[springBoot+mybaties]+前端[angularjs+bootstrap]（前后端分离）</h2></center>
+    </div>
+</div>
+<div ng-app="myApp" ng-controller="customersCtrl" class="myApp" >
+
+    <div class="row" style="margin-left: 10px;">
+        <div class="form-inline">
+            <input type="text" name="userName" ng-model="userName" value="{{$scope.userName}}"  class="form-control" placeholder="请输入用户名" />
+            <button class="btn btn-primary" ng-click="queryAllUser()">搜 索</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                添加
+            </button>
+        </div>
+    </div>
+
+    <!-- 模态框（Modal） 用户数据添加 -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        用户添加
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin-left: 50px;">
+                        <div class="form-inline">
+                            <label>账号：</label>
+                            <input type="text" name="name" ng-model="name" value="{{$scope.name}}" class="form-control" placeholder="请输入用户名" />
+                        </div><br>
+                        <div class="form-inline">
+                            <label>密码：</label>
+                            <input type="password" name="psw"  ng-model="psw"  value="{{$scope.psw}}" class="form-control" placeholder="请输入密码" />
+                        </div><br>
+                        <div class="form-inline">
+                            <label>年龄：</label>
+                            <input type="text" name="age" ng-model="age" value="{{$scope.age}}" class="form-control" placeholder="请输入用户名" />
+                        </div>
+
+                        <span>{{name}}</span>
+                        <span>{{psw}}</span>
+                        <span>{{age}}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="addUser()">
+                        提交
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+
+    </div>
+    <!-- 模态框（Modal） 修改用户 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        用户修改
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin-left: 50px;">
+                        <div class="form-inline">
+                            <label>账号：</label>
+                            <input type="text" name="name" ng-model="name" value="{{$scope.name}}" class="form-control" placeholder="请输入用户名" />
+                        </div><br>
+                        <div class="form-inline">
+                            <label>密码：</label>
+                            <input type="password" name="psw"  ng-model="psw"  value="{{$scope.psw}}" class="form-control"  placeholder="请输入密码" />
+                        </div><br>
+                        <div class="form-inline">
+                            <label>年龄：</label>
+                            <input type="text" name="age" ng-model="age" value="{{$scope.age}}" class="form-control" placeholder="请输入用户名" />
+                        </div><br>
+                        <div class="form-inline">
+                            <input type="hidden" name="id" ng-model="id" value="{{$scope.id}}" class="form-control" />
+                        </div>
+
+                        <span>{{name}}</span>
+                        <span>{{psw}}</span>
+                        <span>{{age}}</span>
+                        <span>{{id}}</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="updateUserById()">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal  -->
+    <table class="table"  ng-show="userList.length" ng-init="initPages()"> <!--ng-init="initPages()"-->
+        <thead>
+        <tr>
+            <th>用户id</th>
+            <th>用户名</th>
+            <th>用户密码</th>
+            <th>用户年龄</th>
+            <th>创建时间</th>
+            <th colspan="2">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in userList">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.psw}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.createDate}}</td>
+            <td>
+                <!--<button type="button" ng-click="removeUserById(item.id)" class="btn btn-link">移除</button>-->
+                <button class="btn btn-primary btn-lg" data-toggle="modal"  ng-click="removeUserById(item.id)">
+                    移除
+                </button>
+            </td>
+            <td>
+                <!-- 按钮触发模态框 -->
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" ng-click="getUserById(item.id)">
+                    修改
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <tm-pagination conf="paginationConf"></tm-pagination>
+    <div class="container" >
+        <p ng-show="!userList.length" style="color:#94caff;font-size: 15pt;margin-top: 45px;bord:1px solid red;border-radius:12px;">您的购物车为空！！！</p>
+    </div>
+
+
+    <ul class="pagination pagination-lg" style="height: 60px;">
+       <!-- &lt;!&ndash;<li><a href="#">共：{{total}}条数据</a></li>&ndash;&gt;-->
+        <li><a href="#">共：80条数据</a></li>
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li><a href="#">7</a></li>
+        <li><a href="#">8</a></li>
+        <li><a href="#">9</a></li>
+        <li><a href="#">10</a></li>
+        <li><a href="#">11</a></li>
+        <li><a href="#">12</a></li>
+        <li><a href="#">13</a></li>
+        <li><a href="#">14</a></li>
+        <li><a href="#">15</a></li>
+        <li><a href="#">16</a></li>
+        <li>
+            <a>跳转到<input type="text" ng-click="" value="" />页</a>
+        </li>
+        <li><a href="#">&raquo;</a></li>
+    </ul><br>
+
+    <!--<ul class="pagination pagination-lg">
+                <table style="text-align: center; margin: 0 auto; width: 100%;">
+                        <tr align="center" height="30" class="STYLE1">
+                            <td colspan="10">共<c:out value="${pageBean.allRow}"></c:out>条数据
+                                &nbsp;分成<c:out value="${pageBean.totalPage}"></c:out>页 &nbsp;当前第<c:out
+                                        value="${pageBean.currentPage}"></c:out>页 <c:if
+                                        test="${pageBean.currentPage == 1}">
+                                    <font color="#000">首页</font>
+                                </c:if> <c:if test="${pageBean.currentPage > 1}">
+                                    <a onclick="pagination(1)">首页</a>
+                                </c:if> <c:if test="${pageBean.currentPage == 1}">
+                                    <font color="#000">上一页</font>
+                                </c:if> <c:if test="${pageBean.currentPage>1}">
+                                    <a onclick="pagination(${pageBean.currentPage - 1})">上一页</a>
+                                </c:if> <c:forEach begin="1" end="${pageBean.totalPage}" var="num">
+                                    <c:choose>
+                                        <c:when test="${pageBean.totalPage == num}">
+                                            <font color="#000">${num}</font>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a onclick="pagination(${num})">${num}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach> <c:if test="${pageBean.currentPage == pageBean.totalPage}">
+                                    <font color="#000">下一页</font>
+                                </c:if> <c:if test="${pageBean.currentPage < pageBean.totalPage}">
+                                    <a onclick="pagination(${pageBean.currentPage + 1})">下一页</a>
+                                </c:if> <c:if test="${pageBean.currentPage == pageBean.totalPage}">
+                                    <font color="#000">末页</font>
+                                </c:if> <c:if test="${pageBean.currentPage < pageBean.totalPage}">
+                                    <a onclick="pagination(${pageBean.totalPage})">末页</a>
+                                </c:if> 跳转到第 <input name="pageNum" id="pageNum" type="text" size="3"
+                                                    value="${pageNum}" style="width: 60px; height: 20px;"
+                                                    onblur="pageSwitch()" /> 页
+                            </td>
+                        </tr>
+
+                </table>
+    </ul><br>-->
+</div>
+
+
+<!-- 引入百度 angularjs -->
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script type="text/javascript" src="./app/index.js"></script>
+<!--  <script  type="text/javascript" src="../vendor/angular.js"></script>-->
+<script>
+
+</script>
+</body>
+</html>

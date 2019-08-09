@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body  ng-app="myApp">
+
+       <div ng-controller="firstController">
+           first.data <input type="text"  ng-model="data.name"/>
+           first.message <input type="text"  ng-model="Data.message"/>
+           <p>
+               first.data :{{data.name}}
+           </p>
+           <p>
+               first.message :{{Data.message}}
+           </p>
+       </div>
+       <div ng-controller="secondController">
+           <p>
+               second.data: {{data.name}}
+           </p>
+           <p>
+               second.message: {{Data.message}}
+           </p>
+       </div>
+
+       <!-- 引入百度 angularjs -->
+       <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+       <script type="text/javascript" src="./app/index.js"></script>
+       <!--  <script  type="text/javascript" src="../vendor/angular.js"></script>-->
+</body>
+</html>

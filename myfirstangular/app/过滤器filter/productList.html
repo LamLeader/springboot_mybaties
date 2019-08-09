@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../vendor/bootstrap3/css/bootstrap.min.css"/>
+
+    <style type="text/css">
+        .orderColor{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<div  ng-app="product">
+    <div class="container" ng-controller="productController">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                <div class="input-group">
+                    <div class="input-group-addon"></div>
+                    <input type="text" class="form-control" id="exampleInputAmount" ng-model="search" placeholder="Please input...">
+                    <div class="input-group-addon"></div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">查询</button>
+        </form>
+        <table class="table" >
+            <thead>
+            <tr>
+                <th ng-click="changeOrder('id')"  ng-class="{dropup:order===''}">
+                    产品编号
+                    <span ng-class="{orderColor:orderType==='id'}" class="caret"></span>
+                </th>
+                <th ng-click="changeOrder('name')"  ng-class="{dropup:order===''}">
+                    产品名称
+                    <span ng-class="{orderColor:orderType==='name'}" class="caret"></span>
+                </th>
+                <th ng-click="changeOrder('price')"  ng-class="{dropup:order===''}">
+                    产品单价
+                    <span ng-class="{orderColor:orderType==='price'}" class="caret"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="product in productDatas |filter:search | orderBy:order+orderType">
+                <td>{{product.id}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<!-- 引入百度 angularjs -->
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script type="text/javascript" src="./app/producList.js"></script>
+<!--  <script  type="text/javascript" src="../vendor/angular.js"></script>-->
+</body>
+</html>

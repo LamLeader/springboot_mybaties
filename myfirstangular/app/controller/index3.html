@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div  ng-app="Pratice">
+    <div ng-controller="FirstController">
+        <input type="button" value="测试jsonp请求" onclick="testJsonp()" />
+    </div>
+</div>
+<script type="text/javascript">
+    function testJsonp() {
+        alert("66666");
+        var  myUrl = "192.168.43.186:8080/queryUser.do?callback=JSON_CALLBACK";
+        alert("7777");
+        $http.jsonp(myUrl).success(
+            function(data){
+                alert(data);
+            }
+
+        );
+    }
+</script>
+
+
+<!-- 引入百度 angularjs -->
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<!--<script type="text/javascript" src="index.js"></script>-->
+<!--  <script  type="text/javascript" src="../vendor/angular.js"></script>-->
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户管理</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+
+    <link rel="stylesheet" href="../vendor/bootstrap3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- 分页组件开始 -->
+    <script type="text/script" src="./../vendor/pages/pagination.js"></script>
+    <link rel="stylesheet" href="./../vendor/pages/pagination.css">
+    <!-- 分页组件结束 -->
+
+
+    <script type="text/javascript">
+
+
+    </script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="user" ng-controller="userController" >
+<!-- .box-body -->
+<div class="box-header with-border">
+    <h3 class="box-title">用户管理</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <!--工具栏-->
+        <div class="pull-left">
+            <div class="form-group form-inline">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}" ><i class="fa fa-file-o"></i> 新建</button>
+                    <button type="button" class="btn btn-default" title="删除" ng-click="dele()"><i class="fa fa-trash-o" ></i> 删除</button>
+                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                    <button type="button" class="btn btn-default" title="查询" ng-click="findPage(0,5)"><i class="fa fa-refresh"></i>查询</button>
+                </div>
+            </div>
+        </div>
+
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable" ng-init="findPage(0,5)">
+            <thead>
+            <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
+                <th class="sorting_asc">ID</th>
+                <th class="sorting">名称</th>
+                <th class="sorting">年龄</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entity in list">
+                <td><input  type="checkbox" ng-click="updateSelection($event, entity.id)"></td>
+                <td>{{entity.id}}</td>
+                <td>{{entity.name}}</td>
+                <td>{{entity.age}}</td>
+                <td class="text-center">
+                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(entity.id)" >修改</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <!--数据列表/-->
+        <tm-pagination conf="paginationConf"></tm-pagination>
+        <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-3 hidden-xs">
+                  <span class="font-bold" translate="page.no">第</span>{{(bigCurrentPage-1)*pagingOptions.size+1}}-{{(bigCurrentPage-1)*pagingOptions.size+pagingOptions.numberOfElements}}
+                  <span class="font-bold" translate="page.item">条</span>/
+                  <span class="font-bold" translate="page.total">共</span>{{pagingOptions.totalElements}}
+                  <span class="font-bold" translate="page.item">条</span>
+                  <span class="font-bold" translate="page.each_page">每页</span>
+                  <select class="input-sm form-control w-sm inline v-middle" style="width:80px" ng-init="pagingOptions.pageSize = pagingOptions.pageSizes[0]" ng-model="pagingOptions.pageSize" ng-options="x for x in pagingOptions.pageSizes" ng-change="pageChanged()">
+                  </select>
+                  <span class="font-bold" translate="page.item">条</span>
+                </div>
+                <div class="col-sm-6 text-center">
+                  <pagination total-items="bigTotalItems" ng-model="bigCurrentPage" ng-change="pageChanged()" max-size="maxSize" class="pagination-sm m-t-none m-b" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="pagingOptions.pageSize"></pagination>
+                </div>
+                <div class="col-sm-3 text-right text-center-xs">                
+                  <ul class="pagination pagination-sm m-t-none m-b-none">
+                      	<span class="font-bold" translate="page.no">第</span>{{bigCurrentPage}}
+                      	<span class="font-bold" translate="page.page">页</span>/
+                        <span class="font-bold" translate="page.total">共</span>{{pagingOptions.totalPages}}
+                        <span class="font-bold" translate="page.page">页</span>
+                        <span class="font-bold" translate="page.go">到</span>
+                        <input type="number" class="form-control w-sm inline" style="width:100px" ng-model="bigCurrentPage" ng-change="bigCurrentPageChanged()">
+                        <span class="font-bold" translate="page.page">页</span>
+                        <button type="submit" class="btn btn-dark" ng-click="pageChanged()">
+                        	<span class="font-bold" translate="common.go">GO</span>
+                        </button>
+                      </ul>
+                </div>
+              </div>
+        </footer>
+    </div>
+
+</div>
+        <!-- 引入百度 angularjs -->
+        <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+        <script type="text/javascript" src="./app/page.js"></script>
+</body>
+</html>
