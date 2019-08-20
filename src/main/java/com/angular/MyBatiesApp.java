@@ -12,7 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan(basePackages={"com.angular.dao"})
 public class MyBatiesApp {
-	
+	/**
+	 * 启动类
+	 * @param arg
+	 */
     public static void main(String[] args) {
     	
 		SpringApplication.run(MyBatiesApp.class, args);
